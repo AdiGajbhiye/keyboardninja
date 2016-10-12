@@ -1,4 +1,5 @@
 class GameController < ApplicationController
+    HTTP_FORBIDDEN = "403"
     def new
         @game = Game.new
         @game.players.build(player_params)
@@ -15,13 +16,25 @@ class GameController < ApplicationController
     def delete
     end
 
-    def getStatus
+    def status
+        @game = Game.find(params[:id])
+        if @game.current?
+            render json: @game
+        else
+            raise HTTP_FORBIDDEN
+        end
     end
 
-    def postPosition
+    def update
     end
 
-    def getResult
+    def result
+        @game = Game.find(params[:id])
+        if @game.finished?
+            render json: @game
+        else
+            raise HTTP_FORBIDDEN
+        end
     end
 
     def player_params

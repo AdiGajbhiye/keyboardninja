@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    "404":
+      heading: "Resource not found"
+      subheading: "The page you are looking for does not exist!"
+    "403":
+      heading: "Request Forbidden"
+      subheading: "This request is not valid anymore!"

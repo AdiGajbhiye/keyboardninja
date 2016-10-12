@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   # delete game     DELETE request                /game/id
   match '/game/:id', to: 'game#delete', via: [:delete], as: :delete_game
   # update              PATCH request                 /game/id
-  match '/game/:id', to: 'game#delete', via: [:patch], as: :update_game
+  match '/game/:id', to: 'game#update', via: [:patch], as: :update_game
 end
