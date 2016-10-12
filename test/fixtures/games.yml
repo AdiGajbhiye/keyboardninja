@@ -2,8 +2,6 @@
 
 one:
   wordsArray: MyText
-  playersArray: one
 
 two:
   wordsArray: MyText
-  playersArray: two
