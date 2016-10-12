@@ -1,13 +1,10 @@
-<%= form_for :game, :html => {:class => "form-horizontal center"}, :url => { :action => 'new', :controller => 'game'} do |f| %>
+<h2>Start a New Game</h2>
+<%= form_for :game, :url => { :action => 'new', :controller => 'game'} do |f| %>
 
   <div class="form-group">
-    <%= f.label :name, class: "col-md-4 control-label", style: "text-align: right" %>
-    <div class="col-md-8">
-        <%= f.text_field :name, class: "form-control" %>
-    </div>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
   </div>
     
-  <div class="actions">
-    <%= f.submit "New Game", class: "btn btn-default btn-primary" %>
-  </div>
+  <%= f.submit "New Game", class: "btn btn-primary" %>
 <% end %>
