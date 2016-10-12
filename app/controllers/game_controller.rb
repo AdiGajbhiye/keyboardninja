@@ -10,7 +10,7 @@ class GameController < ApplicationController
     end
 
     def join
-        @game = Game.find(game_params[:id])
+        @game = Game.find(game_params[:game_id])
         @player = Player.new(player_params)
         @game.players << @player
         @game.save
@@ -51,7 +51,6 @@ class GameController < ApplicationController
         end
 
         def game_params
-            params.require(:game).permit(:id)
+            params.require(:game).permit(:game_id)
         end
-
 end

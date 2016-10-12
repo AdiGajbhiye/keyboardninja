@@ -1,8 +1,8 @@
 <h2>Join an Existing Game</h2>
 <%= form_for :game, :url => { :action => 'join', :controller => 'game'} do |f| %>
   <div class="form-group">
-    <%= f.label :id, class: "control-label" %>
-    <%= f.text_field :id, class: "form-control" %>
+    <%= f.label :game_id, class: "control-label" %>
+    <%= f.text_field :game_id, class: "form-control" %>
   </div>
 
   <div class="form-group">
