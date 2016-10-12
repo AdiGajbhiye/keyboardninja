@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # new game        POST request                    /game/new
   match '/game/new', to: 'game#new', via: [:post], as: :new_game
   # join game         POST request                  /game/id/join
-  match '/game/:id/join', to: 'game#join', via: [:post], as: :join_game
+  match '/game/join', to: 'game#join', via: [:post], as: :join_game
   # result                GET request                      /game/id/result
   match '/game/:id/result', to: 'game#result', via: [:get], as: :result_game
   # status                GET request                     /game/id
