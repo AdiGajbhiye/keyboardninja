@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   match '/game/:id', to: 'game#delete', via: [:delete], as: :delete_game
   # update              PATCH request                 /game/id
   match '/game/:id', to: 'game#update', via: [:patch], as: :update_game
+  # show              GET request                 /game/id
+  match '/game/:id', to: 'game#show', via: [:get], as: :show_game
 end
