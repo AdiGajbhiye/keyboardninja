@@ -26,4 +26,4 @@ en:
       subheading: "The page you are looking for does not exist!"
     "403":
       heading: "Request Forbidden"
-      subheading: "This request is not valid anymore!"
+      subheading: "This request is not valid!"
