@@ -13,7 +13,7 @@ $(document).ready ->
   $('#typed').val ' '
   $('#typed').keypress (e) ->
     console.log i
-    if e.keyCode == 32
+    if e.key == " "
       console.log $('#typed').val().slice(1)
       console.log test[i]
       if $('#typed').val().slice(1) == test[i]

@@ -46,7 +46,7 @@ class GameController < ApplicationController
 
     private
         def player_params
-            params.require(:game).permit(:game_id)
+            params.require(:game).permit(:name)
             { :name => params[:game][:name], :userId => session[:userId] }
         end
 
