@@ -7,6 +7,9 @@
                  __/ |                                          _/ |      
                 |___/                                          |__/       
 
+
+[![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
+
 A multiplayer typing game build using Ruby on Rails, AJAX and jQuery.
 Deployed at keyboardninja.herokuapp.com
 
