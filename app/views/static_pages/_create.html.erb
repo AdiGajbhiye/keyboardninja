@@ -3,7 +3,7 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
+    <%= f.text_field :name, class: "form-control", id: "createName", :required => true %>
   </div>
     
   <%= f.submit "New Game", class: "btn btn-primary" %>

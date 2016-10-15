@@ -1,6 +1,7 @@
 class GameController < ApplicationController
 
     def new
+        cookies.permanent[:username] = params[:game][:name]
         @game = Game.new
         @game.wordsArray = ['Am', 'increasing', 'at', 'contrasted', 'in', 'favourable', 'he', 'considered', 'astonished.', 'As', 'if', 'made', 'held', 'in', 'an', 'shot.', 'By', 'it', 'enough', 'to', 'valley', 'desire', 'do.', 'Mrs', 'chief', 'great', 'maids', 'these', 'which', 'are', 'ham', 'match', 'she.', 'Abode', 'to', 'tried', 'do', 'thing', 'maids.', 'Doubtful', 'disposed', 'returned', 'rejoiced', 'to', 'dashwood', 'is', 'so', 'up.']
         @game.players.build(player_params)
@@ -11,6 +12,7 @@ class GameController < ApplicationController
 
     def join
         @game = Game.find(game_params[:game_id].to_i)
+        cookies.permanent[:username] = params[:game][:name]
         if @game.current?
             if involved_in_game?
                 redirect_to '/game/' + @game[:id].to_s
