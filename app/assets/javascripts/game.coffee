@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 gameID = ""
+isGameStarted = false
 
 getGameTime =(time) ->
   if time < 0
@@ -18,17 +19,10 @@ getElapsedTime = (time) ->
     return time
 
 gameStart = ->
+  isGameStarted = true
   $('#typed').prop 'disabled',false
   $('#typed').focus()
   $('#timerText').text "Game will finish in"
-
-gameFinish = ->
-  $('#typed').prop 'disabled',true
-  $.ajax "/game/#{gameID}" ,
-    type: "GET",
-    dataType: "JSON",
-    success: (data) ->
-      console.log data
 
 gameTimer = ->
   $.ajax "/game/#{gameID}/status" ,
@@ -37,30 +31,34 @@ gameTimer = ->
     success: (data) ->
       time = data.timeSinceCreate
       time = getGameTime time
+      if isGameStarted
+        ppp = "<h3>Users Status</h3>"
+        for player,i in data.players
+          correct = (player.position-player.errors)*100/48
+          wrong = player.errors*100/48
+          name = player.name
+          wpm = Math.round (player.position-player.errors)/(getElapsedTime(data.timeSinceCreate)/60.0)
+          ppp += "<div class='row'><div class='col-md-2'>"+name+"</div><div class=' col-md-10'><div class='progress'>
+              <div class='progress-bar progress-bar-success' role='progressbar' style='width:"+"#{correct}"+"%'>"+"#{wpm} wpm"+"
+              </div>
+              <div class='progress-bar  progress-bar-danger' role='progressbar' style='width:"+"#{wrong}"+"%'>
+              </div>
+              </div>
+              </div>
+              </div>"
+        $("#players").html ppp
       $('#timer').text "#{time}"
-      i = 0
-      ppp = ""
-      for player,i in data.players
-        correct = (player.position-player.errors)*100/400
-        wrong = player.errors*100/400
-        name = player.name
-        wpm = Math.round (player.position-player.errors)/(getElapsedTime(data.timeSinceCreate)/60.0)
-        ppp += "<div class='row'><div class='col-md-2'>"+name+"</div><div class=' col-md-10'><div class='progress'>
-            <div class='progress-bar progress-bar-success' role='progressbar' style='width:"+"#{correct}"+"%'>"+"#{wpm} wpm"+"
-            </div>
-            <div class='progress-bar  progress-bar-danger' role='progressbar' style='width:"+"#{wrong}"+"%'>
-            </div>
-            </div>
-            </div>
-            </div>"
-      $("#players").html ppp
     error: (err) ->
       window.location.replace "/game/#{gameID}/result"
 
 $(document).ready ->
   if $('#actualgame').length > 0
     time = $('#type-test').data "time"
+    gameID = $('#type-test').data "gameid"
     if time < 0
+      preGameText = "<h3 align='center'>Share this GameID <mark>"+"#{gameID}"+"</mark> with your friends.</h3>
+      <h3 align='center'>Go to homepage and join to compete together.</h3>"
+      $('#players').html preGameText
       $('#typed').prop 'disabled',true
       $('#timerText').text "Game starts in"
     else
@@ -68,12 +66,9 @@ $(document).ready ->
       $('#typed').focus()
       $('#timerText').text "Game will finish in"
     $('#timer').text getGameTime time
-    gameID = $('#type-test').data "gameid"
     currentPlayerPosition = $('#gameData').data "position"
     currentPlayerMistakes = $('#gameData').data "mistakes"
 
-    # Initialize
-    i = 0
     test = $('#type-test').text().split ' '
     temp = ""
     for word,i in test
@@ -93,7 +88,6 @@ $(document).ready ->
         $("#"+"#{currentPlayerPosition}").addClass "highlight"
         i = currentPlayerPosition
     $('#0').addClass "highlight"
-    
     $('#typed').val ' '
     setInterval gameTimer,1000
     $('#typed').keypress (e) ->
