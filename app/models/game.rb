@@ -28,6 +28,7 @@ class Game < ApplicationRecord
       player.calculateWpm
       hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size, :wpm => player.wpm } 
     end
+    array.sort_by { |k| k["wpm"] }
   end
 
   def error_made?(params = {})

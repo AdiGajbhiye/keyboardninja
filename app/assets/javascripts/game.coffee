@@ -113,4 +113,27 @@ $(document).ready ->
         i++
         $('#typed').val ''
       return
+
+
+  if $('#result').length > 0
+    resultText ="<table class='table'>
+                <thead>
+      <tr>
+        <th>Position</th>
+        <th>Name</th>
+        <th>WPM</th>
+        <th>Errors</th>
+      </tr>
+    </thead>
+    <tbody>"
+    result = $('#result').data "result"
+    console.log result
+    for player,i in result
+      console.log player
+      resultText += "<tr><td class='col-md-3'>"+"#{i+1}"+"</td>"+
+                    "<td class='col-md-3'>"+player.name+"</td>"+
+                    "<td class='col-md-3'>"+player.wpm+"</td>"+
+                    "<td class='col-md-3'>"+player.errors+"</td></tr>"
+    resultText += "</table>"
+    $('#result').html resultText
   return

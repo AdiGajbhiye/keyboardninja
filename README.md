@@ -11,7 +11,7 @@
 [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 
 A multiplayer typing game build using Ruby on Rails, AJAX and jQuery.
-Deployed at [keyboardninja.herokuapp.com](keyboardninja.herokuapp.com)
+Deployed at [keyboardninja.herokuapp.com](https://keyboardninja.herokuapp.com)
 
 ## Installation
 `MySQL` is used for development environment and `Postgres` for production. Hence to run locally:

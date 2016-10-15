@@ -59,7 +59,7 @@ class GameController < ApplicationController
     def result
         @game = Game.find(params[:id])
         if involved_in_game?
-            render json: @game.result
+            @result = @game.result.to_json
         else
             raise KeyboardNinja::HTTP_FORBIDDEN
         end
