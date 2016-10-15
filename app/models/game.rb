@@ -20,6 +20,7 @@ class Game < ApplicationRecord
     array = self.players.collect do |player|
       hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size } 
     end
+    array = array.sort_by { |k| k[:name] }
     { :players => array, :timeSinceCreate => timeSinceCreate}
   end
 
@@ -28,13 +29,14 @@ class Game < ApplicationRecord
       player.calculateWpm
       hash = { :name => player.name, :position => -1, :errors => player.mistakesArray.size, :wpm => player.wpm }
     end
-    array.sort_by { |k| k["wpm"] }
+    array = array.sort_by { |k| k[:wpm] }
+    array = array.reverse
     array.each_with_index do | item, index |
       item[:position] = index
     end
   end
 
   def error_made?(params = {})
-    self.wordsArray[params[:position].to_i] != params[:typedWord]
+    self.wordsArray[params[:position].to_i]+";" != params[:typedWord]
   end
 end

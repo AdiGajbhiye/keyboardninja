@@ -87,10 +87,14 @@ class GameController < ApplicationController
         end
 
         def game_params
+            params.require(:game).require(:name)
+            params.require(:game).require(:game_id)
             { :name => params[:game][:name], :game_id => params[:game][:game_id]}
         end
 
         def update_params
+            params.require(:position)
+            params.require(:typedWord)
             { :position => params[:position], :typedWord => params[:typedWord] }
         end
 

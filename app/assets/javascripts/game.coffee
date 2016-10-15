@@ -93,7 +93,7 @@ $(document).ready ->
     $('#typed').keypress (e) ->
       if e.key == " "
         gameData = {
-          typedWord: $('#typed').val().slice(1),
+          typedWord: $('#typed').val().slice(1) + ";",
           position: i
         }
         $.ajax "/game/#{gameID}" ,
