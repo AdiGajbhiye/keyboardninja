@@ -3,13 +3,22 @@ class Player < ApplicationRecord
     serialize :mistakesArray,Array
 
     def update (error_made, params = {})
-        if (position < params[:position])
-            position = params[:position]
+        if (self.position == params[:position].to_i)
+            logger.debug self.position
+            logger.debug params[:position]
+            self.position=self.position+1.0
             if error_made
-                mistakesArray.push(params[:typedWord])
+                self.mistakesArray.push(params[:position])
+                logger.debug self.mistakesArray
             end
+            self.save
         else
             raise KeyboardNinja::HTTP_FORBIDDEN
         end
+    end
+
+    def calculateWpm
+        self.wpm = ( self.position - self.mistakesArray.size ) / KeyboardNinja::GAME_DURATION.to_f
+        self.save
     end
 end
