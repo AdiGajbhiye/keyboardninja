@@ -34,18 +34,18 @@ gameTimer = ->
       if isGameStarted
         ppp = "<h3>Users Status</h3>"
         for player,i in data.players
-          correct = (player.position-player.errors)*100/48
-          wrong = player.errors*100/48
           name = player.name
           wpm = Math.round (player.position-player.errors)/(getElapsedTime(data.timeSinceCreate)/60.0)
-          ppp += "<div class='row'><div class='col-md-2'>"+name+"</div><div class=' col-md-10'><div class='progress'>
-              <div class='progress-bar progress-bar-success' role='progressbar' style='width:"+"#{correct}"+"%'>"+"#{wpm} wpm"+"
-              </div>
-              <div class='progress-bar  progress-bar-danger' role='progressbar' style='width:"+"#{wrong}"+"%'>
-              </div>
-              </div>
-              </div>
-              </div>"
+          wpmPercent = wpm*100/80
+          ppp += "<div class='row'>
+                    <div class='col-md-2'>"+name+"</div>
+                    <div class=' col-md-10'>
+                      <div class='progress'>
+                        <div class='progress-bar progress-bar-success' role='progressbar' style='width:"+"#{wpmPercent}"+"%'>"+"#{wpm} wpm"+"
+                        </div>
+                      </div>
+                    </div>
+                  </div>"
         $("#players").html ppp
       $('#timer').text "#{time}"
     error: (err) ->
