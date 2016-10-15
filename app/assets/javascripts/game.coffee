@@ -11,6 +11,12 @@ getGameTime =(time) ->
     gameStart()
     return 120-time
 
+getElapsedTime = (time) ->
+  if time <= 0
+    return 1
+  else
+    return time
+
 gameStart = ->
   $('#typed').prop 'disabled',false
   $('#typed').focus()
@@ -35,9 +41,16 @@ gameTimer = ->
       i = 0
       ppp = ""
       for player,i in data.players
-        temp = (player.position-player.errors)*100/48
-        ppp += "<div class='progress'>
-            <div class='progress-bar' role='progressbar' style='width:"+"#{temp}"+"%'>
+        correct = (player.position-player.errors)*100/48
+        wrong = player.errors*100/48
+        name = player.name
+        wpm = Math.round (player.position-player.errors)/(getElapsedTime(data.timeSinceCreate)/60.0)
+        ppp += "<div class='row'><div class='col-md-2'>"+name+"</div><div class=' col-md-10'><div class='progress'>
+            <div class='progress-bar progress-bar-success' role='progressbar' style='width:"+"#{correct}"+"%'>"+"#{wpm} wpm"+"
+            </div>
+            <div class='progress-bar  progress-bar-danger' role='progressbar' style='width:"+"#{wrong}"+"%'>
+            </div>
+            </div>
             </div>
             </div>"
       $("#players").html ppp
