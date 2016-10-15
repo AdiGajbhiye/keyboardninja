@@ -3,7 +3,7 @@ class Game < ApplicationRecord
   serialize :wordsArray,Array
 
   def timeSinceCreate
-    ((DateTime.now - created_at) * 24 * 60 * 60).to_i
+    ((Time.now().to_i-created_at.to_time.to_i))
   end
 
   def current?

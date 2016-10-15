@@ -30,6 +30,8 @@ gameTimer = ->
   $('#timer').text "#{(gameBufferTime*oneMinute/1000)-j}"
 
 $(document).ready ->
+  time = $('#type-test').data "time"
+  console.log time
   test = $('#type-test').text().split ' '
   temp = ""
   for word,i in test

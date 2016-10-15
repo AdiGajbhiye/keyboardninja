@@ -38,8 +38,9 @@ class GameController < ApplicationController
         @game = Game.find(params[:id])
         if involved_in_game?
             @game.players each do |player|
-                if |player| player.userId == get_user_id
+                if player.userId == get_user_id
                     player.update(@game.check_made?, game_params)
+                end
             end
         else
             raise KeyboardNinja::HTTP_FORBIDDEN

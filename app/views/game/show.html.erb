@@ -1,4 +1,4 @@
-<p id="type-test"><%= @game[:wordsArray].join(' ') %></p>
+<p id="type-test" data-time="<%= @game.timeSinceCreate%>"><%= @game[:wordsArray].join(' ') %></p>
 <div class="form-group">
     <label for="inputlg">Your Answer:</label>
     <input class="form-control input-lg" type="text" id="typed">
