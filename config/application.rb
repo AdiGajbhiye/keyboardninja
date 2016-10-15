@@ -7,8 +7,8 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module KeyboardNinja
-  GAME_DURATION = 10.minutes
-  PRE_GAME_WAIT = 1.seconds
+  GAME_DURATION = 2.minutes
+  PRE_GAME_WAIT = 30.seconds
   HTTP_FORBIDDEN = "403"
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

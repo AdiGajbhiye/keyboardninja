@@ -41,8 +41,8 @@ gameTimer = ->
       i = 0
       ppp = ""
       for player,i in data.players
-        correct = (player.position-player.errors)*100/48
-        wrong = player.errors*100/48
+        correct = (player.position-player.errors)*100/400
+        wrong = player.errors*100/400
         name = player.name
         wpm = Math.round (player.position-player.errors)/(getElapsedTime(data.timeSinceCreate)/60.0)
         ppp += "<div class='row'><div class='col-md-2'>"+name+"</div><div class=' col-md-10'><div class='progress'>
