@@ -11,17 +11,17 @@
 [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 
 A multiplayer typing game build using Ruby on Rails, AJAX and jQuery.
-Deployed at keyboardninja.herokuapp.com
+Deployed at [keyboardninja.herokuapp.com](keyboardninja.herokuapp.com)
 
 ## Installation
-MySQL is used for development environment and Postgres for production. Hence to run locally:
+`MySQL` is used for development environment and `Postgres` for production. Hence to run locally:
 
 1. Install all gems
-    bundle install --without production
+    `bundle install --without production`
 2. Setup database
-    rails db:migrate RAILS_ENV=development
+    `rails db:migrate RAILS_ENV=development`
 3. Run server
-    rails server
+    `rails server`
 
 ## Tests
 `rails test`
