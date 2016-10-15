@@ -61,12 +61,16 @@ class GameController < ApplicationController
 
     private
         def player_params
-            params.require(:game).permit(:name)
+            params.require(:game).require(:name)
             { :name => params[:game][:name], :userId => get_user_id, :position => 0, :wpm => 0.0, :mistakesArray=> [] }
         end
 
         def game_params
-            params.require(:game).permit(:game_id)
+            params.require(:game).require(:game_id)
+        end
+
+        def update_params
+            params.require(:position).require(:typedWord)
         end
 
         def get_user_id
