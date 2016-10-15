@@ -1,24 +1,30 @@
-# README
+     _   __           _                         _   _   _ _       _       
+    | | / /          | |                       | | | \ | (_)     (_)      
+    | |/ /  ___ _   _| |__   ___   __ _ _ __ __| | |  \| |_ _ __  _  __ _ 
+    |    \ / _ \ | | | '_ \ / _ \ / _` | '__/ _` | | . ` | | '_ \| |/ _` |
+    | |\  \  __/ |_| | |_) | (_) | (_| | | | (_| | | |\  | | | | | | (_| |
+    \_| \_/\___|\__, |_.__/ \___/ \__,_|_|  \__,_| \_| \_/_|_| |_| |\__,_|
+                 __/ |                                          _/ |      
+                |___/                                          |__/       
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A multiplayer typing game build using Ruby on Rails, AJAX and jQuery.
+Deployed at keyboardninja.herokuapp.com
 
-Things you may want to cover:
+## Installation
+MySQL is used for development environment and Postgres for production. Hence to run locally:
 
-* Ruby version
+1. Install all gems
+    bundle install --without production
+2. Setup database
+    rails db:migrate RAILS_ENV=development
+3. Run server
+    rails server
 
-* System dependencies
+## Tests
+`rails test`
 
-* Configuration
+## Bugs and Issues
+Have a bug or an issue with this template? Open a new issue here on GitHub.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Copyright and License
+Copyright Aditya Gajbhiye and Shikher Verma. Released under the MIT license.
