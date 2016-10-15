@@ -10,7 +10,7 @@ class GameController < ApplicationController
     end
 
     def join
-        @game = Game.find(game_params[:game_id])
+        @game = Game.find(game_params[:game_id].to_i)
         if @game.current?
             if involved_in_game?
                 redirect_to '/game/' + @game[:id].to_s
@@ -83,7 +83,7 @@ class GameController < ApplicationController
         end
 
         def game_params
-            params.require(:game).require(:game_id)
+            { :name => params[:game][:name], :game_id => params[:game][:game_id]}
         end
 
         def update_params
