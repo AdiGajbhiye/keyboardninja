@@ -11,14 +11,18 @@ class GameController < ApplicationController
 
     def join
         @game = Game.find(game_params[:game_id])
-        if involved_in_game?
-            redirect_to '/game/' + @game[:id].to_s
-        else
-            @player = Player.new(player_params)
-            @game.players << @player
-            if @game.save
+        if @game.current?
+            if involved_in_game?
                 redirect_to '/game/' + @game[:id].to_s
+            else
+                @player = Player.new(player_params)
+                @game.players << @player
+                if @game.save
+                    redirect_to '/game/' + @game[:id].to_s
+                end
             end
+        else
+            raise KeyboardNinja::HTTP_FORBIDDEN
         end
     end
 
@@ -27,7 +31,7 @@ class GameController < ApplicationController
 
     def status
         @game = Game.find(params[:id])
-        if involved_in_game?
+        if (involved_in_game? && @game.current?)
             render json: @game.status
         else
             raise KeyboardNinja::HTTP_FORBIDDEN
@@ -36,7 +40,7 @@ class GameController < ApplicationController
 
     def update
         @game = Game.find(params[:id])
-        if involved_in_game?
+        if (involved_in_game? && @game.current?)
             @game.players each do |player|
                 if player.userId == get_user_id
                     player.update(@game.check_made?, game_params)

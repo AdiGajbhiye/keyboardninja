@@ -3,39 +3,31 @@ class Game < ApplicationRecord
   serialize :wordsArray,Array
 
   def timeSinceCreate
-    ((Time.now().to_i-created_at.to_time.to_i))
+    ((Time.now().to_i - created_at.to_time.to_i - + KeyboardNinja::PRE_GAME_WAIT.to_i))
   end
 
   def current?
     now = DateTime.now
-    created_at < now && now < (created_at + KeyboardNinja::GAME_DURATION)
+    created_at < now && now < (created_at + KeyboardNinja::GAME_DURATION + KeyboardNinja::PRE_GAME_WAIT)
   end
 
   def finished?
     now = DateTime.now
-    now > (created_at + KeyboardNinja::GAME_DURATION)
+    now > (created_at + KeyboardNinja::GAME_DURATION + KeyboardNinja::PRE_GAME_WAIT)
   end
 
   def status
-    if current?
-      array = players.collect do |player|
-        hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size } 
-      end
-    else
-      raise KeyboardNinja::HTTP_FORBIDDEN
+    array = players.collect do |player|
+      hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size } 
     end
     { :players => array, :timeSinceCreate => timeSinceCreate}
   end
 
   def result
-    if finished?
-      array = players.collect do |player|
-        total_words_typed = player.position + 1
-        player.wpm =  ( total_words_typed - player.mistakesArray.size ) / KeyboardNinja::GAME_DURATION
-        hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size, :wpm => player.wpm } 
-      end
-    else
-      raise KeyboardNinja::HTTP_FORBIDDEN
+    array = players.collect do |player|
+      total_words_typed = player.position + 1
+      player.wpm =  ( total_words_typed - player.mistakesArray.size ) / KeyboardNinja::GAME_DURATION
+      hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size, :wpm => player.wpm } 
     end
   end
 
