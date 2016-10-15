@@ -8,7 +8,8 @@ getGameTime =(time) ->
   if time < 0
     return Math.abs time
   else 
-    return 10-time
+    gameStart()
+    return 120-time
 
 gameStart = ->
   $('#typed').prop 'disabled',false
@@ -22,43 +23,67 @@ gameFinish = ->
     dataType: "JSON",
     success: (data) ->
       console.log data
-  console.log correctWords
-  console.log wrongWords
 
 gameTimer = ->
   $.ajax "/game/#{gameID}/status" ,
     type: "GET"
     dataType: "JSON"
     success: (data) ->
-      console.log data.timeSinceCreate
       time = data.timeSinceCreate
       time = getGameTime time
       $('#timer').text "#{time}"
+      i = 0
+      ppp = ""
+      for player,i in data.players
+        temp = (player.position-player.errors)*100/48
+        ppp += "<div class='progress'>
+            <div class='progress-bar' role='progressbar' style='width:"+"#{temp}"+"%'>
+            </div>
+            </div>"
+      $("#players").html ppp
     error: (err) ->
       window.location.replace "/game/#{gameID}/result"
 
 $(document).ready ->
   if $('#actualgame').length > 0
     time = $('#type-test').data "time"
-    time = Math.abs time
-    console.log time
+    if time < 0
+      $('#typed').prop 'disabled',true
+      $('#timerText').text "Game starts in"
+    else
+      $('#typed').prop 'disabled',false
+      $('#typed').focus()
+      $('#timerText').text "Game will finish in"
+    $('#timer').text getGameTime time
     gameID = $('#type-test').data "gameid"
-    console.log gameID
+    currentPlayerPosition = $('#gameData').data "position"
+    currentPlayerMistakes = $('#gameData').data "mistakes"
+
     # Initialize
+    i = 0
     test = $('#type-test').text().split ' '
     temp = ""
     for word,i in test
       temp += '<span class="" id="'+i+'">'+word+'</span> '
     $('#type-test').html temp
+    i = 0 
+    if currentPlayerPosition > 0
+      j = 0
+      while j < currentPlayerPosition
+        if "#{j}" in currentPlayerMistakes 
+          console.log "#"+"#{j}"
+          $("#"+"#{j}").addClass "wrong"
+        else
+          console.log "#"+"#{j}"
+          $("#"+"#{j}").addClass "correct"
+        j++
+        $("#"+"#{currentPlayerPosition}").addClass "highlight"
+        i = currentPlayerPosition
     $('#0').addClass "highlight"
-    i = 0
+    
     $('#typed').val ' '
-    $('#timer').text "#{time}"
-    $('#typed').prop 'disabled',true
-    setTimeout gameStart,time*1000
     setInterval gameTimer,1000
     $('#typed').keypress (e) ->
-      console.log i
       if e.key == " "
         gameData = {
           typedWord: $('#typed').val().slice(1),
@@ -69,7 +94,6 @@ $(document).ready ->
           dataType: "JSON",
           data: gameData,
           success: (data) ->
-            console.log data
         if $('#typed').val().slice(1) == test[i]
           $('#'+i).addClass('correct').remove('highlight')
         else

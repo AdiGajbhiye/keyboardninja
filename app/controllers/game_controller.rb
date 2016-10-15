@@ -65,6 +65,12 @@ class GameController < ApplicationController
         @game = Game.find(params[:id])
         if (involved_in_game? && @game.current?)
             @timeSinceCreate = @game.timeSinceCreate
+            @game.players.each do |player|
+                if player.userId == get_user_id
+                    @current_player_position = player.position
+                    @current_player_mistakes = player.mistakesArray
+                end
+            end
         else
             raise KeyboardNinja::HTTP_FORBIDDEN
         end
