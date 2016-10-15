@@ -57,6 +57,11 @@ class GameController < ApplicationController
 
     def show
         @game = Game.find(params[:id])
+        if (involved_in_game? && @game.current?)
+            @timeSinceCreate = @game.timeSinceCreate
+        else
+            raise KeyboardNinja::HTTP_FORBIDDEN
+        end
     end
 
     private

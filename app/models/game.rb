@@ -2,6 +2,10 @@ class Game < ApplicationRecord
   has_many :players
   serialize :wordsArray,Array
 
+  def timeSinceCreate
+    ((DateTime.now - created_at) * 24 * 60 * 60).to_i
+  end
+
   def current?
     now = DateTime.now
     created_at < now && now < (created_at + KeyboardNinja::GAME_DURATION)
@@ -20,6 +24,7 @@ class Game < ApplicationRecord
     else
       raise KeyboardNinja::HTTP_FORBIDDEN
     end
+    { :players => array, :timeSinceCreate => timeSinceCreate}
   end
 
   def result
