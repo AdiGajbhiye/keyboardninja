@@ -112,6 +112,10 @@ $(document).ready ->
         else
           $('#'+i).addClass('wrong').remove('highlight')
         $('#'+(i+1)).addClass('highlight')
+        $('#'+i)[0].scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
         i++
         $('#typed').val ''
       return

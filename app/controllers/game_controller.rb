@@ -3,7 +3,9 @@ class GameController < ApplicationController
     def new
         cookies.permanent[:username] = params[:game][:name]
         @game = Game.new
-        @game.wordsArray = ['Am', 'increasing', 'at', 'contrasted', 'in', 'favourable', 'he', 'considered', 'astonished.', 'As', 'if', 'made', 'held', 'in', 'an', 'shot.', 'By', 'it', 'enough', 'to', 'valley', 'desire', 'do.', 'Mrs', 'chief', 'great', 'maids', 'these', 'which', 'are', 'ham', 'match', 'she.', 'Abode', 'to', 'tried', 'do', 'thing', 'maids.', 'Doubtful', 'disposed', 'returned', 'rejoiced', 'to', 'dashwood', 'is', 'so', 'up.']
+        text_corpus = (I18n.t 'text_corpus').strip.split(" ")
+        start_index = rand(text_corpus.size-401)
+        @game.wordsArray = text_corpus[start_index, start_index+400]
         @game.players.build(player_params)
         if @game.save
             redirect_to '/game/' + @game[:id].to_s
