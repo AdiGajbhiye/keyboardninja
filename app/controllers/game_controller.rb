@@ -41,9 +41,10 @@ class GameController < ApplicationController
     def update
         @game = Game.find(params[:id])
         if (involved_in_game? && @game.current?)
-            @game.players each do |player|
+            @game.players.each do |player|
                 if player.userId == get_user_id
-                    player.update(@game.check_made?, game_params)
+                    error_made = @game.error_made?(update_params)
+                    player.update(error_made, update_params)
                 end
             end
         else
@@ -80,7 +81,7 @@ class GameController < ApplicationController
         end
 
         def update_params
-            params.require(:position).require(:typedWord)
+            { :position => params[:position], :typedWord => params[:typedWord] }
         end
 
         def get_user_id
