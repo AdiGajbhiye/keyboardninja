@@ -33,4 +33,8 @@ class Game < ApplicationRecord
       raise KeyboardNinja::HTTP_FORBIDDEN
     end
   end
+
+  def check_made(params = {})
+    wordsArray[params[:position]] == params[:typedWord]
+  end
 end
