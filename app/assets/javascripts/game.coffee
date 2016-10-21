@@ -48,8 +48,9 @@ gameTimer = ->
                   </div>"
         $("#players").html ppp
       $('#timer').text "#{time}"
-    error: (err) ->
-      window.location.replace "/game/#{gameID}/result"
+    statusCode:
+      303: (response) ->
+        window.location.replace "/game/#{gameID}/result"
 
 $(document).ready ->
   if $('#actualgame').length > 0

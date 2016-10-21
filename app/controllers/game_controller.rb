@@ -38,7 +38,8 @@ class GameController < ApplicationController
         if (involved_in_game? && @game.current?)
             render json: @game.status
         else
-            raise KeyboardNinja::HTTP_FORBIDDEN
+            render :nothing => true, :status => 303
+            return
         end
     end
 
