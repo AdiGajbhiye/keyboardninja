@@ -11,6 +11,7 @@ class CreateGames < ActiveRecord::Migration[5.0]
       t.integer :userId
       t.integer :position
       t.text :mistakesArray
+      t.text :attemptedArray
       t.float :wpm
       t.timestamps
     end

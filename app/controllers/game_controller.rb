@@ -47,8 +47,13 @@ class GameController < ApplicationController
         if (involved_in_game? && @game.current?)
             @game.players.each do |player|
                 if player.userId == get_user_id
-                    error_made = @game.error_made?(update_params)
-                    player.update(error_made, update_params)
+                    if (!player.attemptedArray.include?(update_params[:position]))
+                        player.attemptedArray.push(update_params[:position])
+                        error_made = @game.wordsArray[update_params[:position].to_i]+";" != update_params[:typedWord]
+                        player.update(error_made, update_params)
+                    else
+                        raise KeyboardNinja::HTTP_FORBIDDEN
+                    end
                 end
             end
         else
@@ -58,7 +63,7 @@ class GameController < ApplicationController
 
     def result
         @game = Game.find(params[:id])
-        if involved_in_game?
+        if involved_in_game? && @game.finished?
             @result = @game.result.to_json
         else
             raise KeyboardNinja::HTTP_FORBIDDEN
@@ -71,7 +76,7 @@ class GameController < ApplicationController
             @timeSinceCreate = @game.timeSinceCreate
             @game.players.each do |player|
                 if player.userId == get_user_id
-                    @current_player_position = player.position
+                    @current_player_position = player.attemptedArray.size
                     @current_player_mistakes = player.mistakesArray
                 end
             end

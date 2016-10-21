@@ -18,7 +18,7 @@ class Game < ApplicationRecord
 
   def status
     array = self.players.collect do |player|
-      hash = { :name => player.name, :position => player.position, :errors => player.mistakesArray.size } 
+      hash = { :name => player.name, :position => player.attemptedArray.size, :errors => player.mistakesArray.size } 
     end
     array = array.sort_by { |k| k[:name] }
     { :players => array, :timeSinceCreate => timeSinceCreate}
@@ -36,7 +36,4 @@ class Game < ApplicationRecord
     end
   end
 
-  def error_made?(params = {})
-    self.wordsArray[params[:position].to_i]+";" != params[:typedWord]
-  end
 end
